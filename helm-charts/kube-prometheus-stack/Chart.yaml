@@ -26,13 +26,13 @@ annotations:
 dependencies:
 - name: kube-state-metrics
   version: "4.7.*"
-  repository: "../kube-state-metrics"  
+  repository: "file://../kube-state-metrics"  
   condition: kubeStateMetrics.enabled
 - name: prometheus-node-exporter
-  version: "3.0.1"
-  repository: "../prometheus-node-exporter"  
+  version: "3.0.*"
+  repository: "file://../prometheus-node-exporter"  
   condition: nodeExporter.enabled
 - name: grafana
-  version: "6.22.*"
-  repository: "../grafana"  
+  version: "6.24.*"
+  repository: "file://../grafana"  
   condition: grafana.enabled
