@@ -1,30 +1,47 @@
-{{ if .Values.imageRenderer.enabled }}
-{{ if .Values.imageRenderer.service.enabled }}
+{{- if .Values.imageRenderer.enabled  }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "grafana.fullname" . }}-image-renderer
-  namespace: {{ template "grafana.namespace" . }}
-  labels:
-    {{- include "grafana.imageRenderer.labels" . | nindent 4 }}
-{{- if .Values.imageRenderer.service.labels }}
-{{ toYaml .Values.imageRenderer.service.labels | indent 4 }}
-{{- end }}
-{{- with .Values.imageRenderer.service.annotations }}
-  annotations:
-{{ toYaml . | indent 4 }}
-{{- end }}
+  name: {{ include "common.names.fullname" . }}-image-renderer
+  namespace: {{ .Release.Namespace }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+    app.kubernetes.io/component: image-renderer
+  {{- if and .Values.imageRenderer.metrics.enabled .Values.imageRenderer.metrics.annotations }}
+  annotations: {{- include "common.tplvalues.render" (dict "value" .Values.imageRenderer.metrics.annotations "context" $) | nindent 4 }}
+    {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" (dict "value" .Values.commonAnnotations "context" $) | nindent 4 }}
+    {{- end }}
+  {{- end }}
 spec:
   type: ClusterIP
-  {{- if .Values.imageRenderer.service.clusterIP }}
+  {{- if and (eq .Values.imageRenderer.service.type "LoadBalancer") .Values.imageRenderer.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.imageRenderer.service.loadBalancerIP }}
+  {{- end }}
+  {{- if and (eq .Values.imageRenderer.service.type "LoadBalancer") .Values.imageRenderer.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges: {{ toYaml .Values.imageRenderer.service.loadBalancerSourceRanges | nindent 4 }}
+  {{- end }}
+  {{- if and (eq .Values.imageRenderer.service.type "ClusterIP") .Values.imageRenderer.service.clusterIP }}
   clusterIP: {{ .Values.imageRenderer.service.clusterIP }}
-  {{end}}
+  {{- end }}
+  {{- if (or (eq .Values.imageRenderer.service.type "LoadBalancer") (eq .Values.imageRenderer.service.type "NodePort")) }}
+  externalTrafficPolicy: {{ .Values.imageRenderer.service.externalTrafficPolicy | quote }}
+  {{- end }}
   ports:
-    - name: {{ .Values.imageRenderer.service.portName }}
-      port: {{ .Values.imageRenderer.service.port }}
+    - port: {{ .Values.imageRenderer.service.ports.imageRenderer }}
+      targetPort: http
       protocol: TCP
-      targetPort: {{ .Values.imageRenderer.service.targetPort }}
-  selector:
-    {{- include "grafana.imageRenderer.selectorLabels" . | nindent 4 }}
-{{ end }}
-{{ end }}
+      name: http
+      {{- if and (or (eq .Values.imageRenderer.service.type "NodePort") (eq .Values.imageRenderer.service.type "LoadBalancer")) (not (empty .Values.imageRenderer.service.nodePorts.grafana)) }}
+      nodePort: {{ .Values.imageRenderer.service.nodePorts.grafana }}
+      {{- else if eq .Values.imageRenderer.service.type "ClusterIP" }}
+      nodePort: null
+      {{- end }}
+    {{- if .Values.imageRenderer.service.extraPorts }}
+    {{- include "common.tplvalues.render" (dict "value" .Values.imageRenderer.service.extraPorts "context" $) | nindent 4 }}
+    {{- end }}
+  selector: {{- include "common.labels.matchLabels" . | nindent 4 }}
+    app.kubernetes.io/component: image-renderer
+{{- end }}
