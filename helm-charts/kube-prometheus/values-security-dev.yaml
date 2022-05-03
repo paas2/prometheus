@@ -1,0 +1,5 @@
+prometheus:
+  thanos:
+    create: true
+    service: 
+      type: LoadBalancer

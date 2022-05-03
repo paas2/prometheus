@@ -1,0 +1,31 @@
+existingObjstoreSecret: thanos-objstore-config
+# query:
+#   # dnsDiscovery:
+#   #   sidecarsService: kube-prometheus-prometheus-thanos
+#   #   sidecarsNamespace: monitoring
+#   stores:
+#     - host.minikube.internal:10901
+#     - host.minikube.internal:10902
+#     - host.minikube.internal:10903
+#     - host.minikube.internal:10904
+#     - host.minikube.internal:10905
+bucketweb:
+  enabled: true
+compactor:
+  enabled: true
+storegateway:
+  enabled: true
+ruler:
+  enabled: true
+  alertmanagers:
+    - http://kube-prometheus-alertmanager.monitoring.svc.cluster.local:9093
+  config: |-
+    groups:
+      - name: "metamonitoring"
+        rules:
+          - alert: "PrometheusDown"
+            expr: absent(up{prometheus="monitoring/kube-prometheus"})
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
