@@ -1,7 +1,4 @@
-objstoreConfig: |-
-  type: s3
-  config:
-    bucket: paas-thanos
+existingObjstoreSecret: thanos-objstore-config
 # query:
 #   # dnsDiscovery:
 #   #   sidecarsService: kube-prometheus-prometheus-thanos
