@@ -2,7 +2,7 @@ prometheus:
   thanos:
     create: true
     objectStorageConfig: 
-      key: 'objstore.yml'
+      key: objstore.yml
       name: thanos-objstore-config
     service: 
       type: LoadBalancer
