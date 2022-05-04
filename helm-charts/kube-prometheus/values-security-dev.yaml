@@ -6,3 +6,4 @@ prometheus:
       secretKey: objstore.yml
     service: 
       type: LoadBalancer
+  disableCompaction: true
