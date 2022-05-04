@@ -1,5 +1,6 @@
 prometheus:
   thanos:
     create: true
+    objectStorageConfig: thanos-objstore-config
     service: 
       type: LoadBalancer
