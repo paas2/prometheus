@@ -6,4 +6,8 @@ prometheus:
       secretKey: objstore.yml
     service: 
       type: LoadBalancer
-  disableCompaction: true
+  # disableCompaction: true
+  retention: 12h
+  extraArgs:
+    - --storage.tsdb.max-block-duration=2h
+    - --storage.tsdb.min-block-duration=2h
