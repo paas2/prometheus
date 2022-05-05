@@ -1,14 +1,14 @@
 existingObjstoreSecret: thanos-objstore-config
-# query:
-#   # dnsDiscovery:
-#   #   sidecarsService: kube-prometheus-prometheus-thanos
-#   #   sidecarsNamespace: monitoring
-#   stores:
-#     - host.minikube.internal:10901
-#     - host.minikube.internal:10902
-#     - host.minikube.internal:10903
-#     - host.minikube.internal:10904
-#     - host.minikube.internal:10905
+query:
+  # dnsDiscovery:
+  #   sidecarsService: kube-prometheus-prometheus-thanos
+  #   sidecarsNamespace: monitoring
+  stores:
+    - kube-prometheus-prometheus-thanos.monitoring:10901
+    # - host.minikube.internal:10902
+    # - host.minikube.internal:10903
+    # - host.minikube.internal:10904
+    # - host.minikube.internal:10905
 bucketweb:
   enabled: true
 compactor:
