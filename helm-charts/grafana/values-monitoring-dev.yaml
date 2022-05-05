@@ -1,2 +1,8 @@
-service:
-  type: LoadBalancer
+dashboardsProvider:
+  enabled: true
+datasources:
+  secretName: datasource-secret
+dashboardsConfigMaps:
+  - configMapName: node-exporter-full
+    folderName: kubernetes
+    fileName: node-exporter-full.json

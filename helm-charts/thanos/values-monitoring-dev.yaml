@@ -5,10 +5,6 @@ query:
   #   sidecarsNamespace: monitoring
   stores:
     - kube-prometheus-prometheus-thanos.monitoring:10901
-    # - host.minikube.internal:10902
-    # - host.minikube.internal:10903
-    # - host.minikube.internal:10904
-    # - host.minikube.internal:10905
 bucketweb:
   enabled: true
 compactor:

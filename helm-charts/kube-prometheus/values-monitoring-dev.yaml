@@ -4,7 +4,5 @@ prometheus:
     objectStorageConfig: 
       secretName: thanos-objstore-config
       secretKey: objstore.yml
-    service: 
-      type: LoadBalancer
   disableCompaction: true
   retention: 12h
