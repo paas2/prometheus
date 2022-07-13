@@ -13407,7 +13407,7 @@ kind: ConfigMap
 metadata:
   creationTimestamp: null
   name: node-exporter-full
-  annotations:
-    "helm.sh/hook": pre-install
-    "helm.sh/hook-weight": "-1"
-    "helm.sh/hook-delete-policy": before-hook-creation
+  # annotations:
+  #   "helm.sh/hook": pre-install
+  #   "helm.sh/hook-weight": "-1"
+  #   "helm.sh/hook-delete-policy": before-hook-creation
