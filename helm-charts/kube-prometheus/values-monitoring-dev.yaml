@@ -1,8 +1,8 @@
 prometheus:
   thanos:
     create: true
-    objectStorageConfig: 
-      secretName: thanos-objstore-config
-      secretKey: objstore.yml
+    # objectStorageConfig: 
+    #   secretName: thanos-objstore-config
+    #   secretKey: objstore.yml
   disableCompaction: true
   retention: 12h
