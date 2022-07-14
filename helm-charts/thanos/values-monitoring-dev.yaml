@@ -12,7 +12,8 @@ query:
   #   sidecarsService: kube-prometheus-prometheus-thanos
   #   sidecarsNamespace: monitoring
   stores:
-    - kube-prometheus-prometheus-thanos.monitoring:10901
+    - thanos-storegateway.monitoring:9090
+    - prometheus-kube-prometheus-prometheus-thanos.monitoring:10901
 bucketweb:
   enabled: true
 compactor:
