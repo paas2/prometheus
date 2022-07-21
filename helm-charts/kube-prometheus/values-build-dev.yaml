@@ -3,7 +3,7 @@ prometheus:
     create: true
     ingress:
       enabled: true
-      # path: /thanos
+      path: /thanos
     # objectStorageConfig: 
     #   secretName: thanos-objstore-config
     #   secretKey: objstore.yml
