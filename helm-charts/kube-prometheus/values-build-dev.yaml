@@ -1,4 +1,6 @@
 prometheus:
+  ingress:
+    enabled: true
   thanos:
     create: true
     # objectStorageConfig: 
